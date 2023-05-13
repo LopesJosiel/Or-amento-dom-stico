@@ -9,7 +9,7 @@ orcamentodemestico = mysql.connector.connect(
   database="orcamentodomestico"
 )
 mycursor = orcamentodemestico.cursor()
-entrada = input ('receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa
+entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa
 #criando o tratamento com o banco de dados
 while entrada != 'f':
   if entrada == 'r': #input da receita realizado com sucesso
@@ -23,9 +23,8 @@ while entrada != 'f':
       mycursor.close () # fechando cursor quanto for executado
       orcamentodemestico.close() #fechando conexão futura ao banco de dados
       print ('receita inserida com sucesso no Banco de Dados')
-  entrada = input ('receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa 
-  #criando o tratamento com o banco de dados
-  if entrada == 'd': #input da despesa realizado com sucesso
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
+  elif entrada == 'd': #input da despesa realizado com sucesso
       var_data = input('Escolha a data')
       var_valor1 = input('qual o valor da despesa')
       var_valor = float (var_valor1)
@@ -36,20 +35,30 @@ while entrada != 'f':
       mycursor.close () # fechando cursor quanto for executado
       orcamentodemestico.close() #fechando conexão futura ao banco de dados
       print ('despesa inserida com sucesso no Banco de Dados')
-  entrada = input ('receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa
-
-  #Tratamento para o total da receita
-  if entrada == 'R':
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
+  elif entrada == 'R': #Tratamento para o total da receita
       orcamentodemestico = mysql.connector.connect(host="localhost",user="root",password="1035308",database="orcamentodomestico")
       mycursor = orcamentodemestico.cursor()
-      consulta_receita = 'SELECT SUM(valor) FROM orcamentodomestico.receita'
+      consulta_receita = 'SELECT sum(valor) FROM orcamentodomestico.receita;'
       mycursor.execute(consulta_receita)
       resultado_receita = mycursor.fetchall () #ler o banco de dados
+      print (f'O total da receita é{resultado_receita}') #imprimir o resultado da consulta da receita
       mycursor.close() # fechando cursor quanto for executado
       orcamentodemestico.close() #fechando conexão futura ao banco de dados
-      print (consulta_receita)
-      
-
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
+  elif entrada == 'D': #Tratamento para o total da despesa
+      orcamentodemestico = mysql.connector.connect(host="localhost",user="root",password="1035308",database="orcamentodomestico")
+      mycursor = orcamentodemestico.cursor()
+      consulta_despesa = 'SELECT sum(valor) FROM orcamentodomestico.despesa;'
+      mycursor.execute(consulta_despesa)
+      resultado_despesa = mycursor.fetchall () #ler o banco de dados
+      print (f'O total da despesa é{resultado_despesa}') #imprimir o resultado da consulta da receita
+      mycursor.close() # fechando cursor quanto for executado
+      orcamentodemestico.close() #fechando conexão futura ao banco de dados
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')   
+  else :
+     entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa 
+  
 
     
     
