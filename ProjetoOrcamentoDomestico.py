@@ -13,6 +13,8 @@ entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total desp
 #criando o tratamento com o banco de dados
 while entrada != 'f':
   if entrada == 'r': #input da receita realizado com sucesso
+      orcamentodemestico = mysql.connector.connect(host="localhost", user="root", password="1035308", database="orcamentodomestico")
+      mycursor = orcamentodemestico.cursor()
       var_data = input('Escolha a data')
       var_valor1 = input('qual o valor da receita')
       var_valor = float (var_valor1)
@@ -25,6 +27,8 @@ while entrada != 'f':
       print ('receita inserida com sucesso no Banco de Dados')
       entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
   elif entrada == 'd': #input da despesa realizado com sucesso
+      orcamentodemestico = mysql.connector.connect(host="localhost", user="root", password="1035308", database="orcamentodomestico")
+      mycursor = orcamentodemestico.cursor()
       var_data = input('Escolha a data')
       var_valor1 = input('qual o valor da despesa')
       var_valor = float (var_valor1)
@@ -37,6 +41,7 @@ while entrada != 'f':
       print ('despesa inserida com sucesso no Banco de Dados')
       entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
   elif entrada == 'R': #Tratamento para o total da receita
+      orcamentodemestico = mysql.connector.connect(host="localhost", user="root", password="1035308", database="orcamentodomestico")
       orcamentodemestico = mysql.connector.connect(host="localhost",user="root",password="1035308",database="orcamentodomestico")
       mycursor = orcamentodemestico.cursor()
       consulta_receita = 'SELECT sum(valor) FROM orcamentodomestico.receita;'
