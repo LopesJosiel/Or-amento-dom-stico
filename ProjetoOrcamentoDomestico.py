@@ -41,7 +41,6 @@ while entrada != 'f':
       print ('despesa inserida com sucesso no Banco de Dados')
       entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
   elif entrada == 'R': #Tratamento para o total da receita
-      orcamentodemestico = mysql.connector.connect(host="localhost", user="root", password="1035308", database="orcamentodomestico")
       orcamentodemestico = mysql.connector.connect(host="localhost",user="root",password="1035308",database="orcamentodomestico")
       mycursor = orcamentodemestico.cursor()
       consulta_receita = 'SELECT sum(valor) FROM orcamentodomestico.receita;'
@@ -60,7 +59,23 @@ while entrada != 'f':
       print (f'O total da despesa é{resultado_despesa}') #imprimir o resultado da consulta da receita
       mycursor.close() # fechando cursor quanto for executado
       orcamentodemestico.close() #fechando conexão futura ao banco de dados
-      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')   
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') 
+  elif entrada == 's' :
+      orcamentodemestico = mysql.connector.connect(host="localhost",user="root",password="1035308",database="orcamentodomestico")
+      mycursor = orcamentodemestico.cursor()
+      consulta_despesa = 'SELECT sum(valor) FROM orcamentodomestico.despesa;'
+      mycursor.execute(consulta_despesa)
+      resultado_despesa = mycursor.fetchall ()
+      consulta_receita = 'SELECT sum(valor) FROM orcamentodomestico.receita;'
+      mycursor.execute(consulta_receita)
+      resultado_receita = mycursor.fetchall ()
+      saldo_total = resultado_receita[0][0]- resultado_despesa[0][0]
+      resultado_saldo = mycursor.fetchall () #ler o banco de dados e encontrar o saldo
+      print (f'O saldo total é{saldo_total}') #imprimir o resultado da consulta do saldo total do orçamento
+      mycursor.close() # fechando cursor quanto for executado
+      orcamentodemestico.close() #fechando conexão futura ao banco de dados
+      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]')
+
   else :
      entrada = input ('ESCOLHA : receita[r],total receita[R], despesa [d], total despesa [D], saldo[s], fechar [f]') #entrada que definirá o caminho a ser seguido pelo programa 
   
